@@ -1,0 +1,12 @@
+DNS Notes:
+
+DOMAIN NAME SYSTEM
+
+internet would not work without it
+in packet tracer router can't act as dns servers
+router will forward/route dns queries without any config because its basically a normal packet
+
+Remember to release and renew DHCP on the client if changes have been made to the DHCP pool on the DHCP server!!!
+you can set a DNS server and default gateway on the switch the same way you do one a router in IOS. 
+
+Typing this "ping google.com" with DNS means this "ping [ip address]"

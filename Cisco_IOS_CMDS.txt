@@ -1,0 +1,305 @@
+Intro to Cisco IOS:
+- enable  //enter privileged EXEC mode from user EXEC mode
+- ?  //view available commands (can also view command completion)
+- configure terminal  //enter global configuration mode from privileged EXEC mode
+- enable password [password]  //sets a plain-text password to enter privileged EXEC mode
+- service password-encryption  // weak (7) encrypts all future and current passwords
+- enable secret [password]   //sets a stronger password using MD5 encryption
+- do [command]  //allows you to run privileged EXEC mode commands in global configuration mode
+- no [command]  //removes the command (ex. no service password-encryption)
+- show running-config
+- show startup-config
+- write  //saves running config to startup config
+- write memory
+- copy running-config startup-config
+- end  //go back to privileged EXEC mode without typing exit twice
+
+Ethernet Switching:
+- show arp  //shows ARP table on a Cisco device
+- show mac address-table  //show the switches MAC table
+- clear mac address-table dynamic  //clears the entire switches MAC table in priveleged EXEC mode
+- clear mac address-table dynamic address [MAC]  //IF the optional MAC address is used, it will clear the SPECIFIC MAC address.
+- clear mac address-table dynamic interface [Interface]  // clears the MAC table entry of the Switch by it's INTERFACE name.
+
+IPv4 Addressing:
+- show ip interface brief  //lists the Interfaces, IP Addresses, Method, Status(L1), and Protocol (L2)
+- interface [interface name]  //enters interface config mode for that interface
+- ip address [address] [netmask]  //sets ip address and netmask of interface
+- mac address [mac-address]  //sets mac address for interface in interface config mode
+- shutdown  //fully disables an interface
+- show interfaces  //displays lots of info about interfaces (runts, giants, etc) also displays interface L2 address
+- show interfaces description //displays description of interfaces
+- description [description]  //sets desired description for interface in interface config mode
+
+Switch Interfaces:
+- show interfaces status  //only works on switches and displays duplex, speed, type, status, etc.
+- duplex [duplex]  //sets duplex in interface config mode (routers and switches)
+- speed [speed]  //sets speed in interface config mode (routers and switches)
+- interface range [range] (ex. f0/5 - 12, g0/0 - 2)
+- show interfaces [interface name]  //Error stats will be at the bottom 
+
+Routing:
+- show ip route  //displays routes configured on device
+- ip route [ip address (destination network)] [netmask] [next-hop]  //sets a static route
+- ip route [ip address (destination network)] [netmask] [exit-interface]
+- ip route [ip address (destination network)] [netmask] [exit-interface] [next-hop]
+
+VLANS:
+- show vlan brief  //displays which vlans exist on the switch and which interface is assigned.
+- switchport mode access  //sets the interface as an access (untagged) port
+- switchport access vlan [vlan-id] //allows the switchport to be an access port for the vlan entered
+- vlan [vlan-id]  //entering a vlans name can enter vlan config mode for that vlan. if it does not exist it will be created.
+- name [vlan-name]  //in vlan config mode will set a name for the vlan (the vlan id or number will stay the same. name is like description for interfaces)
+- switchport trunk encapsulation dot1q  //must do this before manually configuring the switchport as a trunk (interface config mode)
+- switchport mode trunk  //sets the interface as a trunk (tagged) port
+- show interfaces trunk  //displays trunk interfaces and vlan allowed and active information
+- switchport trunk native vlan [vlan-id]  //configures the native vlan on the trunk port
+- switchport trunk allowed vlan [vlan-id]  //allowed vlans on first config
+- switchport trunk allowed vlan add [vlan-id]  //adds specified allowed vlans to the trunk port
+- switchport trunk allowed vlan all  //allows all vlans to the trunk port
+- switchport trunk allowed vlan except [vlan-id]  //allows all vlans except the ones specified in the command
+- switchport trunk allowed vlan none  //allows no vlan to be used on the trunk port
+- switchport trunk allowed vlan remove [vlan-id]  //removes specified vlan from the trunk port
+
+ROAS (Router on a stick):
+- encapsulation dot1q [vlan-id]  //configures the vlan that corresponds to that router's sub interface (in sub-interface config mode)
+- encapsulation dot1q [vlan-id] native //configures native vlan or configure ip address on router physical interface (eg. G0/0 not G0/0.10)
+- no interface [interface-id]  //removes the VLAN interface
+- default interface [interface-id]  //resets the specified interface to it’s default settings
+
+SVI (L3 Switches):
+- ip routing  //enables L3 routing on the switch in global config mode
+- no switchport  //configures the interface from an L2 switchport to an L3 routed port in interface config mode
+- interface [vlan-id]  //creates an SVI for that vlan (must be enabled manually)
+
+DTP/VTP:
+- show interfaces [interface-id] switchport  //displays switchport settings
+- switchport nonegotiate  //disable DTP on switchport
+- switchport mode dynamic desirable  //will actively try to form a trunk port
+- switchport mode dynamic auto  //will NOT actively try to form a trunk port
+- show vtp status  //displays vtp information
+- vtp mode [mode]  //configures switch in the client, server (default), or transparent
+
+STP:
+- show spanning-tree  //displays stp informationy
+- spanning-tree mode [mode]  //confgures the stp mode (PVST)
+- spanning-tree vlan [vlan-id] root primary  //sets switch as root bridge
+- spanning-tree vlan [vlan-id] root secondary  //sets switch as secondary root bridge 
+- spanning-tree vlan [vlan-id] cost [cost]  //sets root cost of port
+- spanning-tree vlan [vlan-id] port-priority [priority]  //sets port priority
+
+STP Toolkit:
+- spanning-tree portfast  //enables portfast on an interface
+- spanning-tree portfast default  //enables portfast on all access ports (global config mode)
+- spanning-tree bpduguard [mode] //enables or disables portfast on an interface
+- spanning-tree portfast bpduguard default  //enables bpduguard on all PortFast enabled ports (global config mode)
+- spanning-tree portfast bpdufilter default  //enables bpdufilter on all PortFast enabled ports (global config mode)
+- spanning-tree guard root  //enables root guard on interface
+- spanning-tree guard loop  //enables loop guard on interface
+- spanning-tree guard none  //disables loop guard on interface
+- spanning-tree bpdufilter [mode]  //disables or enables bpdufilter on interface
+
+EtherChannel:
+- port-channel load-balance [mode]  //configures the EtherChannel load-balancing method on a SWITCH (source mac/ip, dest, etc)
+- show etherchannel load-balance  //displays information about the load-balancing settings
+- channel-group [number] mode {desirable | auto | active | passive | on}  //configures an interface to be PART of an EtherChannel (interface config mode)
+- show etherchannel summary  //displays a summary of EtherChannels on a SWITCH
+- show etherchannel port-channel
+
+Dynamic Routing Protocols:
+- ip route [ip address (destination network)] [netmask] [next-hop] [AD] //set the AD for a floating static route
+- passive-interface [interface]  //configures the interface to not send RIP/EIGRP/OSPF requests. (router will still advertise the network connected to the passive interface)
+- default-information originate  //sends default route information to neighbors.
+- show ip protocols  //show dynamic routing information.
+- maximum-paths [paths]  //sets the maximum paths that can be used to load balance.
+- distance [AD value]  //sets a different AD for the specified routing protocol in protocol config mode.
+- no auto-summary  //shuts off auto summary.
+
+Routing Information Protocol (RIP):
+- router rip  //enter rip config mode.
+- network [ip address]  //specifies the network that interfaces must have to activate RIP on.
+
+Enhanced Internal Gateway Routing Protocol (EIGRP):
+- router eigrp [as-num]  //enter eigrp config mode.
+- network [ip address] [wildcard mask] //specifies the network that interfaces must have to activate EIGRP on.
+- eigrp router-id [a.b.c.d]  //sets the router id for EIGRP.
+
+Open Shortest Path First (OSPF):
+- router ospf [process-id]  //enter ospf config mode.
+- network [ip address] [wildcard mask] area [area-num]  //specifies the network that interfaces must have to activate OSPF on.
+- router-id [a.b.c.d]  //set the router-id for OSPF.
+- clear ip ospf process  //restart the ospf process on the router.
+- show ip ospf interface [interface-id]  //show ospf interface information (can be used without interface specification)
+- auto-cost reference-bandwidth [mbps]  //change the reference bandwidth value rb / ib = cost
+- ip ospf cost [cost]  //configures interface cost
+- ip ospf [process-id] area [area]  //configure ospf on an individual interface in interface config mode.
+- passive-interface default  //configure all interfaces as ospf passive.
+- no passive-interface [interface-id]  //remove specified interface from passive state.
+- show ip ospf database  //display the LSdatabase of router
+- show ip ospf neighbor  //display the OSPF neighbors the interface has
+- ip ospf priority [value] //config the priority of the interface in interface config mode (if it is 0 it cannot be DR/BDR)
+- show ip ospf interface brief 
+- ip ospf network [type]  //configure network type (broadcast, point-to-point, etc) interface config mode
+
+Serial Interfaces:
+- encapsulation []  //change encapsulation type (ppp).
+- clock rate [bps]  //configure DCE operating speed.
+- show controllers [interface-id]  //show serial information of interfaces
+
+Hot Standby Router Protocol (HSRP):
+- standby version [num]  //config HSRP version
+- standby [group] ip [VIP]  //configure the HSRP virtual ip address.
+- standby [group] preempt  //take back active router privileges. only needs to be configured on router you want to be active.
+- standby [group] priority [num]  //sets router HSRP priority (higher will be active router, default is 100)
+
+IPv6:
+- ipv6 unicast-routing  //enables ipv6 routing on router
+- ipv6 address [address]/[prefix]  //configure ipv6 address on an interface (interface config mode)
+- ipv6 address [address]/[prefix] eui-64 //configure ipv6 address using eui-64 on an interface (interface config mode)
+- ipv6 address [address]/[prefix] anycast  //configure ipv6 anycast address
+- ipv6 enable  //enables ipv6 on an interface
+- show ipv6 neighbor  //displays neighbor ipv6 routers
+- ipv6 address autoconfig  //SLAAC
+- ipv6 route [dest-network]/[prefix] {exit-interface} {next-hop} [ad]
+
+Standard ACLs:
+- show ip interface {interface-id}  //shows which ACLs are apllied to an interface
+- show access-list  //display access-lists
+- show ip access-list  //displays ip access lists
+- no [seq-num]  //delete acl entries in acl config mode (in gcm it deletes the entire acl)
+- ip access-list resequence [acl-id] [starting-seq-num] [increment]  //resequence ACEs in an ACL
+- access-list [acl-number] {deny | permit} [ip] [wildcard-mask]  //add an ACE to a Standard ACL from global config mode
+- access-list [acl-number] {deny | permit} host [ip]  //host ip address (don't need to specify wildcard mask)
+- access-list [acl-number] {deny | permit} any   //deny or permit all traffic
+- ip access-group [acl-number] {in | out}  //apply acl to interface inbound or outbound
+- ip access-list standard [acl-name]  //enter standard named acl config mode (can also be done for numbered ACLS) (This is preferred)
+- [entry-number] {deny | permit} [ip] [wildcard-mask]  //configure an ACE in standard acl config mode
+
+Extended ACLs:
+- ip access-list extended [acl-name]  //enter standard named acl config mode
+- access-list [acl-num] {permit | deny} [protocol] [src-ip] [wildcard-mask] [src-port] [dest-ip] [wildcard-mask] [dest-port]
+- {seq-num} {permit | deny} [protocol] [src-ip] [wildcard-mask] [src-port] [dest-ip] [dest-port] [wildcard-mask]  //add ACE in acl config mode
+- eq  //equal
+- gt  //greater than
+- lt  less than
+- range  //port range
+- neq  //except
+
+Domain Name System (DNS):
+- show hosts  //displays devices
+- ip dns server  //configures the device to act as a DNS server
+- ip host {domain name} {ip address}  //creates a mapping of the domain name to the specified IP address
+- ip name-server {ip address}  //adds an external or other dns server that the device will query for domain names
+- ip domain lookup  //enables the device to use extermal name server (enabled by default)
+- ip default-gateway {ip address}  //configure a default gateway on an SWITCH
+
+Dynamic Host Configuration Protocol (DHCP):
+- service dhcp  //enables dhcp on the device
+- show ip dhcp pool  //display DHCP pool information
+- show ip dhcp binding  //displays devices that have been given an IP address from DHCP
+- ip excluded-address {low ip} {high ip}  //shows ip address to be excluded from the DHCP pool for that subnet
+- ip dhcp pool {NAME}  //creates a DHCP pool and enters DHCP config mode where imporatant client info is confgured (DNS server, gateway, etc)
+- network {ip address} {netmask}  //configue the address that the pool will include (excluded address will NOT be used!)
+- lease {days} {hours} {minutes}  //configure lease time
+- lease infinite  //infinite lease time (not recommended)
+- ip helper-address {dhcp server ip address}  //make device a DHCP relay agent in interface config mode for interface connected to subnet with DHCP clients
+- ip address dhcp  //in interface config mode, sets the interface ip to use DHCP instead of a manual config
+- clear ip dhcp binding *  //clear the DHCP bindings
+
+Network Address Translation (NAT):
+- clear ip nat translation * //clears dynamic NAT translations in privileged EXEC mode
+- show ip nat translations  //displays the NAT mappings
+- show ip nat statistics  //displays nat info for static and dynamic (active translations, inside and outside interfaces) 
+- ip nat inside  //in interface config mode for the interface that is inside the LAN, facing the devices that need NAT
+- ip nat outside  //the interface that is facing the internet, that devices will use to get to the internet
+- ip nat inside source static {inside local ip} {inside global ip}  //maps the private ip to the public routable ip.
+- ip nat pool {pool name} {low ip address} {high ip address} prefix-length {number}  //create a NAT pool with public address for the hosts to use
+- ip nat inside source list {acl-num/name} pool {pool-name}  //map acl to NAT pool
+- ip nat inside source list {acl-num/name} pool {pool-name} overload //map acl to NAT pool using PAT (NAT Overload)
+- ip nat inside source list {acl-num/name} interface {int-id} overload //Have PAT (NAT Overload) use the router's external interface as global IP address
+
+Secure Shell (SSH):
+- show ip ssh  //show if SSH is enabled and its version
+- line {console | vty} {low num} {high num}  //configure the console line or vty lines 
+- username {name} secret {passwd}  //set a user account
+- login local  //in console/vty line config mode set this to use the account to login
+- exec-timeout {minutes} {seconds}  //timout
+- transport input {ssh | telnet | all | none}  //allow connections types to the vty line (should only be SSH for security)
+- access-class {acl-num/name} {in | out}  //apply/link ACL to the vty line 
+- ip domain name {name}  //set a domain name for device
+- crypto key generate rsa [length]  //generate RSA keys for SSH using the FQDN (length must be > 768 bits)
+- ip ssh version 2  //restricts SSH to v2 (optional but recommended)
+- ssh -l {username} {password}  //SSH into a device
+
+File Transfer Protocol & Trivial File Transfer Protocol (FTP & TFTP):
+- show version  //show IOS version
+- show flash  //display files in the flash directory
+- copy {source} {destination}  //ex. copy tftp: flash:
+- boot system {file path}  //ex. flash:filename.txt
+- delete {file path}
+- reload  //restart device
+- ip ftp username {username}  //set ftp auth account
+- ip ftp password {password}  //set ftp auth account
+
+Syslog:
+- show logging
+- logging synchronous  //will create newline if log message interupts command entry (should be configured on appropriate line (console config mode/vty))
+- logging console {severity}  //toggle severity of syslog messages shown on the console
+- logging monitor {severity}  //enable logging to vty lines and also toggle severity (is done on the ssh/telnet client)
+- terminal monitor  //done in an ssh or telnet session to enable syslog messages being displayed (is done on the ssh/telnet client)
+- logging buffered {severity}  //toggle severity of syslog messages sent to buffer
+- logging host {syslog server ip}  //send syslog messages to syslog server
+- logging trap {severity}  //set the severity level of the syslog messages sent to the syslog server
+- service {message display}  //enable sequence and time in syslog message
+
+Network Time Protocol (NTP):
+- show ntp associations  //displays NTP servers that the client has added to it
+- show ntp status  //displays clock sync, NTP server being used, stratum
+- ntp server {ip address}  //configure an NTP server that the client device gets time sync from
+- ntp update-calendar  //have NTP sync the calendar
+- ntp source {interface-id} //NTP interface the clients contact
+- ntp master [stratum]  //makes the device an NTP server with a stratum of 8 (associations should show 7)
+- ntp peer {ip address}  //creates a symmertic active NTP peering with NTP servers in the same stratum
+- ntp authenticate  //Enables NTP authenticatation
+- ntp authenticate-key {key-number} md5 {key}  //creates the passkey
+- ntp trusted-key {key-number}  //specify that the key is trusted
+- ntp server/peer {ip-address} key {key-number}  //link key to server or peer for authenticatation
+
+Cisco Discovery Protocol (CDP):
+- show cdp  //show CDP timers
+- show cdp neighbors  //displays basic neigbor information
+- show cdp neighbors detail  //detail (like ip address or IOS version)
+- show cdp traffic  //sent and recieved CDP
+- show cdp interface  //CDP for every interface
+- show cdp entry {device name}  //CDP for specified device
+- [no] cdp run  //enable CDP in global config mode
+- [no] cdp enable  //enable CDP on an interface (interface config mode)
+- cdp time {seconds}
+- cdp holdtime {seconds}
+
+Link Layer Discovery Protocol (LLDP):
+- mostly same as with CDP
+- lldp reinit timer {seconds}  //for the reinit timer
+- lldp transmit  //interface config mode so that the interface can send LLDP messages
+- lldp recieve  //interface config mode so that the interface can recieve LLDP messages
+
+Windows Client:
+- ipconfig
+- ipconfig /all
+- ipconfig /renew  //renew DHCP info (sends a DHCP Discover)
+- ipconfig /release  //release DHCP IP info (sends a DHCP Release)
+- nslookup {domain name}  //display DNS info for domain name
+- ipconfig /displaydns  //show device DNS cache
+- ipconfig /flushdns  //clear device DNS cache
+- ping {ip} -n {num}  //send a certain amount of pings
+
+Manual Clock Config:
+- show clock
+- show clock detail
+- show calendar
+- clock set {hh:mm:ss} {day of the year:num} {month} {year}  //manually set the clock
+- calendar set {hh:mm:ss} {day of the year:num} {month} {year}  //manually set the calendar
+- clock update-calendar  //software clock updates the calendar to match software clock time
+- clock read-calendar  //software clock reads the calendar and updates to match it.
+- clock timezone {name} {offset from UTC}  //set timezone (global config mode)
+- clock summer-time recurring  //daylight saving time

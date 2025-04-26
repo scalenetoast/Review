@@ -1,0 +1,23 @@
+Subnetting
+Prev. day Anki
+Meditation
+
+Theory (JITL, Prac Net, OCG)
+Labbing (JITL, 101)
+Review + add to CMD txt file
+Anki
+
+EVE-NG and GNS3 and Packet Tracer Deep Dives
+
+Talk to GPT
+
+
+Deep Dives (Post-CCNA):
+
+- OCG (Troubleshooting, ping, traceroute, SHASUM)
+- L4 (TCP, UDP, TLS)
+- DNS
+- SMTP
+- IPv6
+- NAT
+- IPSEC + VPNs

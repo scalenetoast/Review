@@ -1,0 +1,4 @@
+CDP and LLDP
+
+LLDP (802.1AB) shows a switch capabilty as B: Bridge 
+CDP shows a switch capabilty as S: switch

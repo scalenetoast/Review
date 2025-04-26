@@ -1,0 +1,17 @@
+ACL Notes:
+
+Standard Access Control Lists:
+(Apply closest to destination)
+
+watch out for implicit deny
+if an acl is updated or added to, you dont need to reapply it to the interface
+
+Extened Access Control Lists:
+(Apply closest to source)
+
+watch out for implicit deny
+if an acl is updated or added to, you dont need to reapply it to the interface
+
+IRL ACL Tip:
+ - Don't use Standard ACLs, just use Extended
+ - Consider aggregation when applying the ACL.

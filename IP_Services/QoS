@@ -1,0 +1,15 @@
+QoS
+
+
+Voice Vlans:
+
+router sub interfaces must be configured with a vlan (encapsulation dot1q {vlan-id}) before it can be assigned an IP address.
+
+Switch tells IP Phone what VLAN it is in and Router tells IP Phone its phone number
+
+****Voice VLAN data is tagged even though its connected to an access port****
+Data traffic from the PC is untagged as usual.
+
+
+4 traffic classes
+3 levels of drop precedence

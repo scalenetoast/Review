@@ -1,0 +1,20 @@
+New Lab:
+
+ip host PC1 192.168.0.1 
+ip host PC2 192.168.0.2 
+ip host PC3 192.168.0.3 
+ip name-server 1.1.1.1
+
+Old Lab:
+
+Router:
+ip dhcp excluded-address 192.168.1.1 192.168.1.10
+!
+ip dhcp pool 1POOL
+ network 192.168.1.0 255.255.255.0
+ default-router 192.168.1.1
+ dns-server 20.0.0.100
+
+Switch:
+
+ip name-server 

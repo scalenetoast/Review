@@ -1,0 +1,13 @@
+NAT Notes:
+
+NETWORK ADDRESS TRANSLATION 
+
+Static NAT:
+
+Dynamic NAT:
+
+not like DHCP pool. there is no NAT pool config mode!!
+You must add a specific range for address that can be used for NAT. With DHCP it just tkaes the network address and mask (only excludes specified address)
+NAT ACLs are NOT applied to an interface! They are mapped to a NAT pool and that's how they filter which address get translated!!!
+
+need to have netmask when config a NAT pool, DHCP pool does not need this

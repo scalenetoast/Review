@@ -1,0 +1,16 @@
+DHCP Notes:
+
+DYNAMIC HOST CONGURATION PROTOCOL
+
+check if DHCP is enabled (service dhcp)
+dhcp-config mode
+'no shutdown' router interfaces!!!!
+Understand where the DHCP clients are located and what info the will need (default gateway, etc)
+If router is being used as DHCP server within the same subnet. Exclude the IP address of the router, so DHCP does not assign it.
+
+Configure helper address cmd on interface with DHCP clients
+Use IP address if the DHCP server in the helper address cmd
+
+Router will add to ip dhcp binding even if the full DORA process has not been completed. If a device sends a discover and the DHCP server
+sends the offer, it will show as being binded becasue that IP has been currently reserved for that device even though the full DORA has not gone
+through.
