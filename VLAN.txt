@@ -1,0 +1,32 @@
+for ROAS, you must configure the encapsulation + vlan allowed on the subinterface before you can give the subinterface an IP Address.
+'encapsulation dot1q {num} [native]'
+
+remember to enable the ROUTER interface, it is disabled by default even when connected
+
+SVIs are the default gateways for the VLANs. Then L3 switch has a point to point with the router (other L3 switches?)
+
+default keyword comes first when resetting interface configs to defaults
+
+REMEMBER 'ip routing' cmd on L3 SWITCH!!!!!
+
+ALSO 'no switchport' to go from switchport to L3 port. this is for physical interfaces (NOT FOR SVI)
+
+when configuring route, dont forget NEXT HOP IP!!
+
+if a L2 switch recaives a frame from VLANX, it will only forward/flood the frame out interfaces (access or trunk) within VLANX. 
+Need a router/L3 Switch for inter-vlan routing
+
+trunk links allow all vlans by default, so make sure to allow only needed vlans
+
+the encapsulation dot1q {vlan-num}  //the vlan num MUST match, it is what the router looks at for TAGGING. subinterface id can be diff
+if you change the encapsulation on the interface, it will remove the IP address configured on it, so you have to do it again
+
+SVI numbers must match with the VLAN they are supposed to be matched to!!
+SVI are disabled by default
+
+BIG POINTS:
+
+1.) Enable router interfaces
+2.) 'encapsulation dot1q {vlan-id}' on router subinterfaces before assigning IP Address
+3.) 'ip routing' on L3 switch to enable routing!!!
+3.5.) 'no switchport' to enable routing for L3 switch interface

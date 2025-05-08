@@ -1,0 +1,72 @@
+Objectives:
+
+Packet Tracer Lab 1: Mini Branch Office Network (DHCP + NAT + CDP/LLDP + SSH)
+
+Topology:
+
+    2 Routers (HQ + Branch)
+
+    2 Switches
+
+    2 PCs
+
+    1 Server
+
+Tasks:
+
+    DHCP server on HQ router serving both sites (via DHCP relay).
+
+    NAT overload (PAT) for internet access at HQ router.
+
+    Enable CDP and LLDP and validate device connections.
+
+    Configure SSH access to both routers.
+
+    Test name resolution if DNS is available (optional extra).
+
+Key Concepts Reinforced:
+
+    NAT and DHCP playing together
+
+    Neighbor discovery (CDP/LLDP)
+
+    Remote device management with SSH
+
+    Layer 3 and Layer 2 discovery visibility
+
+
+NOTES:
+
+HQ: 10.0.0.0/8
+Branch: 192.168.1.0/24
+
+enable secret is ccna
+
+DHCP
+DNS
+NAT
+SSH
+
+TROUBLESHOOTING:
+
+- make sure routers have ROUTES to different subnets!!!!
+- make sure the inside and outside NAT interfaces are properly CONFIGURED (ip nat inside should be done on the interface facing the LAN and same for outside)
+- just because domain name is added to the DHCP pool, it does not mean the DHCP server will get the same domain name. You must manually Configure a 
+domain name on the server. (clients will receive the domain name from dhcp pool)
+- make sure the pool names are coorect when want to re-config the pool. make sure it does not create a new pool with a slightly similar name
+- make sure host IPs in ACLs don't change or watch out for when they do (probably due to DHCP)
+- telnet uses user accounts to login as well.
+
+SSH setup steps:
+
+1. set a hostname (non default)
+2. set a domain name (completes the FQDN need for rsa key gen)
+3. enable secret
+4. create a user account (username {name} secret {passsword})
+5. generate rsa keys
+6. create an ACL that permits certain IPs to SSH/Telnet
+6. enter vty line config mode
+7. set the account info that the telnet/ssh client will have to enter to proceed (login local)
+8. set timeout time
+9. transport input [ssh | telnet | all | none]
+10. link ACL to vty line

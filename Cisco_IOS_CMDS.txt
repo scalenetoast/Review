@@ -45,14 +45,14 @@ Routing:
 - ip route [ip address (destination network)] [netmask] [exit-interface] [next-hop]
 
 VLANS:
-- show vlan brief  //displays which vlans exist on the switch and which interface is assigned.
+- show vlan brief  //displays which vlans exist on the switch and which interface is assigned. only shows access port!
+- show interfaces trunk  //displays trunk interfaces and vlan allowed and active information
 - switchport mode access  //sets the interface as an access (untagged) port
 - switchport access vlan [vlan-id] //allows the switchport to be an access port for the vlan entered
 - vlan [vlan-id]  //entering a vlans name can enter vlan config mode for that vlan. if it does not exist it will be created.
 - name [vlan-name]  //in vlan config mode will set a name for the vlan (the vlan id or number will stay the same. name is like description for interfaces)
 - switchport trunk encapsulation dot1q  //must do this before manually configuring the switchport as a trunk (interface config mode)
 - switchport mode trunk  //sets the interface as a trunk (tagged) port
-- show interfaces trunk  //displays trunk interfaces and vlan allowed and active information
 - switchport trunk native vlan [vlan-id]  //configures the native vlan on the trunk port
 - switchport trunk allowed vlan [vlan-id]  //allowed vlans on first config
 - switchport trunk allowed vlan add [vlan-id]  //adds specified allowed vlans to the trunk port
@@ -64,13 +64,13 @@ VLANS:
 ROAS (Router on a stick):
 - encapsulation dot1q [vlan-id]  //configures the vlan that corresponds to that router's sub interface (in sub-interface config mode)
 - encapsulation dot1q [vlan-id] native //configures native vlan or configure ip address on router physical interface (eg. G0/0 not G0/0.10)
-- no interface [interface-id]  //removes the VLAN interface
+- no interface [interface-id]  //removes the VLAN sub interfaces
 - default interface [interface-id]  //resets the specified interface to it’s default settings
 
 SVI (L3 Switches):
 - ip routing  //enables L3 routing on the switch in global config mode
 - no switchport  //configures the interface from an L2 switchport to an L3 routed port in interface config mode
-- interface [vlan-id]  //creates an SVI for that vlan (must be enabled manually)
+- interface [vlan-id]  //creates an SVI for that vlan (must be enabled manually)!1
 
 DTP/VTP:
 - show interfaces [interface-id] switchport  //displays switchport settings
@@ -125,20 +125,21 @@ Enhanced Internal Gateway Routing Protocol (EIGRP):
 - eigrp router-id [a.b.c.d]  //sets the router id for EIGRP.
 
 Open Shortest Path First (OSPF):
+- show ip ospf database  //display the LSdatabase of router
+- show ip ospf neighbor  //display the OSPF neighbors the interface has
+- show ip ospf interface [interface-id]  //show ospf interface information (can be used without interface specification) will display DR/BDR
+- show ip ospf interface brief 
 - router ospf [process-id]  //enter ospf config mode.
 - network [ip address] [wildcard mask] area [area-num]  //specifies the network that interfaces must have to activate OSPF on.
 - router-id [a.b.c.d]  //set the router-id for OSPF.
 - clear ip ospf process  //restart the ospf process on the router.
-- show ip ospf interface [interface-id]  //show ospf interface information (can be used without interface specification)
 - auto-cost reference-bandwidth [mbps]  //change the reference bandwidth value rb / ib = cost
-- ip ospf cost [cost]  //configures interface cost
-- ip ospf [process-id] area [area]  //configure ospf on an individual interface in interface config mode.
 - passive-interface default  //configure all interfaces as ospf passive.
 - no passive-interface [interface-id]  //remove specified interface from passive state.
-- show ip ospf database  //display the LSdatabase of router
-- show ip ospf neighbor  //display the OSPF neighbors the interface has
+- ip ospf {process-id} area {area-num}  //enable OSPF directly on an interface
+- ip ospf cost [cost]  //configures interface cost
+- ip ospf [process-id] area [area]  //configure ospf on an individual interface in interface config mode.
 - ip ospf priority [value] //config the priority of the interface in interface config mode (if it is 0 it cannot be DR/BDR)
-- show ip ospf interface brief 
 - ip ospf network [type]  //configure network type (broadcast, point-to-point, etc) interface config mode
 
 Serial Interfaces:
