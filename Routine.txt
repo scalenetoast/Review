@@ -1,23 +1,25 @@
 Subnetting
-Prev. day Anki
 Meditation
-
-Theory (JITL, Prac Net, OCG)
-Labbing (JITL, 101)
-Review + add to CMD txt file
 Anki
 
-EVE-NG and GNS3 and Packet Tracer Deep Dives
+Labbing (JITL, 101, Odom, Barker)
+Build small enterprise network (Rick)
+Build own CCNA projects (PT, GNS3, CML, EVE-NG)
 
 Talk to GPT
 
 
+
 Deep Dives (Post-CCNA):
 
+- TCP/IP + Network Warrior
 - OCG (Troubleshooting, ping, traceroute, SHASUM)
 - L4 (TCP, UDP, TLS)
 - DNS
-- SMTP
+- SMTP/POP3
 - IPv6
 - NAT
+- FTP/TFTP (observe lockstep)
 - IPSEC + VPNs
+- Collision Domains (half vs full duplex)
+- VLAN Hopping + other attacks network related
